@@ -1,27 +1,15 @@
 import React, {Component} from 'react';
 import {Button, Table} from 'antd';
+import {$http} from './services/http'
 import './App.css';
-
+import axios from 'axios';
 
 class App extends Component {
     constructor(props) {
         super(props)
         this.state = {
 
-            dataSource: [
-                {
-                    key: '1',
-                    name: '胡彦斌',
-                    age: 32,
-                    address: '西湖区湖底公园1号',
-                },
-                {
-                    key: '2',
-                    name: '胡彦祖',
-                    age: 42,
-                    address: '西湖区湖底公园1号',
-                },
-            ],
+            dataSource: [],
             columns: [
                 {
                     title: '姓名',
@@ -44,14 +32,31 @@ class App extends Component {
     }
 
     clickme = () => {
-        console.log(this)
+        let data = {"page": 1, "chainId": "", "hash": "", "pagesize": 10}
+        // $http.post(this, {
+        //     url: "/chain/getBlockNewTxPage",
+        //     dataType: "json",
+        //     data: data,
+        //     success: function (res) {
+        //         console.log(res)
+        //     },
+        // });
+        let data1 = {"pagenum":'1', "chainId": '1'}
+        $http.get(this, {
+            url: "/asset/downloadrecords",
+            dataType: "json",
+            data:data1,
+            success: function (res) {
+                console.log(res)
+            },
+        });
     }
 
     render() {
         return (
             <div className="App">
                 <header className="App-header">
-                    <Table dataSource={this.state.dataSource} columns={this.state.columns}/>;
+                    <Table dataSource={this.state.dataSource} columns={this.state.columns}/>
                     <Button onClick={this.clickme} type="primary">Button</Button>
                 </header>
             </div>
