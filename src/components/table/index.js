@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import {Button, Table} from 'antd';
-import {$http} from './services/http'
-import './App.css';
+import {$http} from '../../services/http'
+import './index.css';
 
-class App extends Component {
+class table extends Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -46,13 +46,21 @@ class App extends Component {
             dataType: "json",
             data:data1,
             success: function (res) {
-               this.setState({'dataSource':res.data.dataList})
+                this.setState({'dataSource':res.data.dataList})
+                setTimeout=()=>{
+
+                }
 
             },
         });
     }
     to_second=()=>{
-
+        this.props.history.push({
+            pathname:'/home',
+            params:{
+                id:111
+            }
+        })
     }
 
     render() {
@@ -61,11 +69,11 @@ class App extends Component {
                 <header className="App-header">
                     <Table dataSource={this.state.dataSource} columns={this.state.columns}/>
                     <Button onClick={this.clickme} type="primary">Button</Button>
-                    <p onClick={this.to_second}></p>
+                    <p onClick={this.to_second}>跳转</p>
                 </header>
             </div>
         );
     }
 }
 
-export default App;
+export default table;
