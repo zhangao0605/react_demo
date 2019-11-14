@@ -1,53 +1,48 @@
 import React, {Component} from 'react';
 import 'antd/dist/antd.css';
 import {Input, Button,} from 'antd';
-import store from '../../store';
-
+import { connect } from 'react-redux';
+import { addCount, reduceCount } from '../../store/actions/countAction'
+import PropTypes from 'prop-types';
 class redux_test extends Component{
     constructor(props){
         super(props);
         this.state = {
-            inputValue: 'aa',
-            list: store.getState().list  //公共state中的list
-        }
-        // 监听store变化
-        // store.subscribe(this.handleStoreChange);
-    }
 
-    render(){
+        }
+    }
+    render() {
         return (
             <div>
-                <Input
-                    placeholder="请输入"
-                    style={{width:'300px',marginRight:'10px'}}
-                    value={this.state.inputValue}
-                    onChange={this.handleInputChange}
-                />
-                <Button type="primary" onClick={this.addListItem}>提交</Button>
+                <button onClick={()=>this.props.addCount()}>加1</button>
+                {this.props.count}
+                <button onClick={()=>this.props.reduceCount(5)}>减5</button>
             </div>
-        )
+        );
     }
 
-    handleInputChange = (e) => {
-        // console.log(this.state.inputValue)
-        this.setState({inputValue:e.target.value})
-    }
-
-    addListItem = () => {
-        // 派发action
-        store.dispatch({
-            type: 'change_value',
-            value: this.state.inputValue
-        })
-    }
-    componentDidMount(){
-        // setInterval(()=>{
-        //     console.log(store.getState().list)
-        // },1000)
-    }
-    handleStoreChange = () => {     // 当store发生改变时做的处理，store.subscribe中添加
-        this.setState({list: store.getState().list});
+}
+// 定义方法mapStateToProps，参数为state，并且返回一个对象，对象内定义需要获取的store内的数据，
+// 由于是使用的countReducer中的数据，所以需要使用state.countReducer.属性名
+function mapStateToProps(state) {
+    console.log(state)
+    return {
+        count: state.countReducer.count
     }
 }
 
-export default redux_test;
+function mapDispatchToProps(dispatch) {
+    return {
+        addCount: () => dispatch(addCount()),
+        reduceCount: (num) => dispatch(reduceCount(num))
+    }
+}
+redux_test.propTypes = {
+    count: PropTypes.number.isRequired,
+    addCount: PropTypes.func.isRequired,
+    reduceCount: PropTypes.func.isRequired
+}
+
+// connect的第一个参数为数据，即mapStateToProps方法
+// 接着在第二个括号内传入当前需要被改造的组件
+export default connect(mapStateToProps,mapDispatchToProps)(redux_test);
