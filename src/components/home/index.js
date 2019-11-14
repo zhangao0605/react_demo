@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
-
+import './index.css'
+import {Link} from 'react-router-dom'
 class home extends Component {
     constructor(props) {
 
@@ -12,7 +13,11 @@ class home extends Component {
     }
     render() {
         return (
-            <div>second</div>
+            <div className='app_home'>
+                <div>second</div>
+                <Link to="/tests">跳转</Link>
+            </div>
+
         )
 
 

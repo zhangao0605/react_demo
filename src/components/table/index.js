@@ -40,36 +40,37 @@ class table extends Component {
         //         console.log(res)
         //     },
         // });
-        let data1 = {"pagenum":'1', "chainId": '1'}
+        let data1 = {"pagenum": '1', "chainId": '1'}
         $http.get(this, {
             url: "/asset/downloadrecords",
             dataType: "json",
-            data:data1,
+            data: data1,
             success: function (res) {
-                this.setState({'dataSource':res.data.dataList})
-                setTimeout=()=>{
+                this.setState({'dataSource': res.data.dataList})
+                setTimeout = () => {
 
                 }
 
             },
         });
     }
-    to_second=()=>{
+    to_second = () => {
         this.props.history.push({
-            pathname:'/home',
-            params:{
-                id:111
+            pathname: '/home',
+            params: {
+                id: 111
             }
         })
     }
 
     render() {
         return (
-            <div className="App">
+            <div className="app_table">
                 <header className="App-header">
-                    <Table dataSource={this.state.dataSource} columns={this.state.columns}/>
-                    <Button onClick={this.clickme} type="primary">Button</Button>
-                    <p onClick={this.to_second}>跳转</p>
+                    <Button onClick={this.to_second} type="primary">页面跳转</Button>
+                    <Table  className="con_table" dataSource={this.state.dataSource} rowKey={row=>row.hash} columns={this.state.columns}/>
+                    <Button className="con_table" onClick={this.clickme} type="primary">获取数据</Button>
+
                 </header>
             </div>
         );
