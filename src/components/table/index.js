@@ -62,12 +62,23 @@ class table extends Component {
             }
         })
     }
+    to_redux_test = () => {
+        this.props.history.push({
+            pathname: '/redux_test',
+            params: {
+                id: 111
+            }
+        })
+    }
 
     render() {
         return (
             <div className="app_table">
                 <header className="App-header">
                     <Button onClick={this.to_second} type="primary">页面跳转</Button>
+                    <br/>
+                    <br/>
+                    <Button onClick={this.to_redux_test} type="primary">redux_test</Button>
                     <Table  className="con_table" dataSource={this.state.dataSource} rowKey={row=>row.hash} columns={this.state.columns}/>
                     <Button className="con_table" onClick={this.clickme} type="primary">获取数据</Button>
 
